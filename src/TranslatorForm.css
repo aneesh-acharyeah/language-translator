@@ -1,0 +1,39 @@
+.translator {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #f4f4f4;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+textarea {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+select, button {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+}
+
+button {
+  background: #4caf50;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.result-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #fff;
+  border-left: 4px solid #4caf50;
+  text-align: left;
+}
