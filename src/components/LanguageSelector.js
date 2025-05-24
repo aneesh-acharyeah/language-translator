@@ -1,5 +1,5 @@
-import React from 'react'
-import './LanguageSelector.css'; // optional: for styling
+import React from 'react';
+import '../LanguageSelector.css'; // optional: for styling
 
 function LanguageSelector({ languages, selectedLang, onChange, label }) {
     return (
@@ -15,8 +15,7 @@ function LanguageSelector({ languages, selectedLang, onChange, label }) {
                 }
             </select>
         </div>
-
-    )
+    );
 }
 
-export default LanguageSelector
+export default LanguageSelector;

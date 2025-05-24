@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
-import axios from 'axios';
-import './TranslatorForm.css';
-
-
+import React, { useState } from 'react';
+import '../TranslatorForm.css';
+import LanguageSelector from './LanguageSelector';
 
 const languages = [
     { code: 'en', name: 'English' },
@@ -24,33 +22,46 @@ function TranslatorForm() {
         if (!text) return;
         setLoading(true);
         try {
-            const response = await axios.post('https://libretranslate.de/translate', {
-                q: text,
-                source: 'auto',
-                target: toLang,
-                format: 'text'
-            }, {
-                headers: { accept: 'application/json' }
+            const response = await fetch("https://libretranslate.de/translate", {
+                method: "POST",
+                body: JSON.stringify({
+                    q: text,
+                    source: "auto",
+                    target: toLang,
+                    format: "text"
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
-            setTranslated(false);
+            
+            const data = await response.json();
+            setTranslated(data.translatedText);
         } catch (error) {
-            console.error('Trasnlation failed', error);
-            setTranslated('Translation error.')
+            console.error('Translation failed', error);
+            setTranslated('Translation error. Please try again.');
         } finally {
             setLoading(false);
         }
-    }
+    };
+
     return (
         <div className="translator">
-            <textarea value={text} onChange={(e) => setText(e.target.value)} rows="5" placeholder='Enter text to translate...'>
-            </textarea>
-
-            <select value={toLang} onChange={(e) => setToLang(e.target.value)}>
-                {languages.map(lang => (
-                    <option key={lang.code} value={lang.code}>{lang.name}</option>
-                ))}
-            </select>
-            <button onClick={translate} disabled={loading}>
+            <textarea 
+                value={text} 
+                onChange={(e) => setText(e.target.value)} 
+                rows="5" 
+                placeholder='Enter text to translate...'
+            />
+            
+            <LanguageSelector
+                languages={languages}
+                selectedLang={toLang}
+                onChange={setToLang}
+                label="Translate to"
+            />
+            
+            <button onClick={translate} disabled={loading || !text}>
                 {loading ? 'Translating...' : 'Translate'}
             </button>
 
@@ -61,7 +72,7 @@ function TranslatorForm() {
                 </div>
             )}
         </div>
-    )
+    );
 }
 
-export default TranslatorForm
+export default TranslatorForm;
